@@ -31,7 +31,6 @@ def parse_passwd_add_uid_name(dict_users, set_users, passwd_filepath):
     :param passwd_filepath: file path of passwd file
     :return: None
     """
-
     with open(passwd_filepath) as f:
 
         for line in f:
@@ -82,6 +81,8 @@ def parse_group_add_groups(dict_users, dict_groups, set_users, group_filepath):
     :param group_filepath: file path of group file
     :return: None
     """
+    #raise AssertionError("parse group")
+
     set_gid = set()
     set_groupnames = set()
 
@@ -192,8 +193,6 @@ def parse_cmdargs_get_passwd_group_filepath():
     args.pwd_file = args.pwd_file or '/etc/passwd'
     args.grp_file = args.grp_file or '/etc/group'
 
-    print("include" + str(args))
-
     return args.pwd_file, args.grp_file, args.include_primary_group
 
 
@@ -207,7 +206,6 @@ def check_flag_add_primary_group(flag_include_primary_group, dict_users,
     :param dict_groups:
     :return:
     """
-
     if flag_include_primary_group is False:
         logging.info("Excluding primary group for each user")
         return
@@ -223,6 +221,18 @@ def check_flag_add_primary_group(flag_include_primary_group, dict_users,
         primary_gid = value['temp_store']['primary_gid']
         for group_name in dict_groups[primary_gid]['group_names']:
             value['groups'].append(group_name)
+
+
+def is_linux_check():
+    """
+    Raise exception if non-Linux OS detected
+
+    :return: None
+    """
+    if sys.platform == "linux" or sys.platform == "linux2":
+        return
+    else:
+        raise AssertionError("Linux OS not detected.")
 
 
 def parse_passwd_group_dump_json():
@@ -243,11 +253,15 @@ def parse_passwd_group_dump_json():
 
     :return: None
     """
+
     try:
+
+        setup_logging()
+
         passwd_filepath, group_filepath, flag_include_primary_group = \
             parse_cmdargs_get_passwd_group_filepath()
 
-        setup_logging()
+        is_linux_check()
 
         # this dictionary will be converted to json, and should have the exact
         # same structure as needed for the json output
