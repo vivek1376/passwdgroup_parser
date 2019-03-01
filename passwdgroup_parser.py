@@ -161,10 +161,11 @@ def setup_logging():
               ">> sudo mkdir -p /var/log\n"
               ">> sudo touch /var/log/passwdparser.log\n"
               ">> sudo chown $USER /var/log/passwdparser.log"
-              " # OR, add it to appropriate user/group as suitable.",
+              "  # OR, change ownernship appropriately to "
+              " some other USER:GROUP",
               file=sys.stderr)
 
-        # don't re-raise exception; terminate script with error status
+        # don't re-raise exception; terminate script with error status 1
         sys.exit(1)
 
 
@@ -255,7 +256,6 @@ def parse_passwd_group_dump_json():
     """
 
     try:
-
         setup_logging()
 
         passwd_filepath, group_filepath, flag_include_primary_group = \
