@@ -81,8 +81,6 @@ def parse_group_add_groups(dict_users, dict_groups, set_users, group_filepath):
     :param group_filepath: file path of group file
     :return: None
     """
-    #raise AssertionError("parse group")
-
     set_gid = set()
     set_groupnames = set()
 
@@ -111,6 +109,7 @@ def parse_group_add_groups(dict_users, dict_groups, set_users, group_filepath):
 
             if gid not in set_gid:
                 dict_groups[gid] = dict()
+                # multiple groups can have same gid
                 dict_groups[gid]['group_names'] = []
                 set_gid.add(gid)
 
@@ -203,9 +202,9 @@ def check_flag_add_primary_group(flag_include_primary_group, dict_users,
     Check flag to add primary group
 
     :param flag_include_primary_group: boolean value to decide
-    :param dict_users:
-    :param dict_groups:
-    :return:
+    :param dict_users: main dictionary storing user data
+    :param dict_groups: dict containing group info, built previously
+    :return: None
     """
     if flag_include_primary_group is False:
         logging.info("Excluding primary group for each user")
