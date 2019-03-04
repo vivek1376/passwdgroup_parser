@@ -15,7 +15,7 @@
   - sudo chown $USER /var/log/passwdparser.log # OR, change ownership appropriately to 
                                                # some other USER:GROUP
 ```
-  - Execute manually: ```./passwdgroup_parser.py```, or add to crontab script
+  - Execute manually: ```./passwdgroup_parser.py```, or add to crontab script; output will be dumped to *stdout*
 #### CLI arguments (*All are optional*):
   - display help: ```-h, --help```
   - specify custom passwd file path: ```-p PWD_FILE, --pwd_file PWD_FILE```
